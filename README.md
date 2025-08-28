@@ -59,5 +59,3 @@ The website is deployed via **GitHub Pages** for public access. To view the live
 ## Contact
 
 For questions about the website or professional inquiries, please refer to the "Contact" section of the live portfolio.
-
-> （注：文档部分内容可能由 AI 生成）
