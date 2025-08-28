@@ -42,7 +42,7 @@ This approach allowed for efficient implementation of a polished, professional p
 
 The website is deployed via **GitHub Pages** for public access. To view the live version, visit:
 
-`https://[your-github-username].``github.io`
+`https://zhimingchang.github.io`
 
 ## Technical Details
 
