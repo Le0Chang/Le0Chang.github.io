@@ -1,517 +1,276 @@
-<html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zhiming Chang - Personal Profile</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
+    <title>Zhiming Chang</title>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- Configure Tailwind with JHU colors -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#003B6F', // JHU dark blue
-                        secondary: '#007C9B', // JHU accent blue
-                        light: '#F0F7FF', // Light blue background
-                        jhuGold: '#FFB81C' // JHU gold accent
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                }
-            }
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', system-ui, sans-serif; color: #333; line-height: 1.6; background: #fff; }
+        a { color: #003B6F; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            background: rgba(255,255,255,0.95); backdrop-filter: blur(8px);
+            border-bottom: 1px solid #e5e7eb; padding: 0.75rem 0;
         }
-    </script>
-    <!-- Custom utilities -->
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .content-auto {
-                content-visibility: auto;
-            }
-            .text-shadow {
-                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }
-            .transition-custom {
-                transition: all 0.3s ease;
-            }
-            .pulse-animation {
-                animation: pulse 2s infinite;
-            }
-            .timeline-item {
-                opacity: 0;
-                transform: translateY(20px);
-                transition: all 0.6s ease-out;
-            }
-            .timeline-item.visible {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            @keyframes pulse {
-                0% {
-                    box-shadow: 0 0 0 0 rgba(0, 59, 111, 0.4);
-                }
-                70% {
-                    box-shadow: 0 0 0 10px rgba(0, 59, 111, 0);
-                }
-                100% {
-                    box-shadow: 0 0 0 0 rgba(0, 59, 111, 0);
-                }
-            }
+        nav .nav-inner {
+            max-width: 900px; margin: 0 auto; padding: 0 1.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        nav .name { font-size: 1.1rem; font-weight: 700; color: #003B6F; }
+        nav .links { display: flex; gap: 1.5rem; }
+        nav .links a { color: #555; font-size: 0.9rem; font-weight: 500; text-decoration: none; }
+        nav .links a:hover { color: #003B6F; }
+        .menu-btn { display: none; background: none; border: none; font-size: 1.3rem; color: #555; cursor: pointer; }
+
+        /* Main layout */
+        .container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+        main { padding-top: 4rem; }
+
+        /* About section - sidebar layout */
+        .about { display: flex; gap: 2.5rem; padding: 2.5rem 0 2rem; border-bottom: 1px solid #e5e7eb; }
+        .about-photo { flex-shrink: 0; }
+        .about-photo img {
+            width: 180px; height: 180px; border-radius: 50%;
+            object-fit: cover; border: 3px solid #e5e7eb;
+        }
+        .about-info h1 { font-size: 1.8rem; font-weight: 700; color: #111; margin-bottom: 0.25rem; }
+        .about-info .subtitle { font-size: 1rem; color: #003B6F; font-weight: 500; margin-bottom: 0.75rem; }
+        .about-info .bio { color: #555; font-size: 0.95rem; margin-bottom: 1rem; }
+        .about-info .contact-row { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; font-size: 0.9rem; color: #555; }
+        .about-info .contact-row i { color: #003B6F; width: 16px; margin-right: 0.3rem; }
+
+        /* Section styling */
+        section { padding: 1.75rem 0; border-bottom: 1px solid #e5e7eb; }
+        section:last-of-type { border-bottom: none; }
+        section h2 {
+            font-size: 1.3rem; font-weight: 700; color: #111;
+            margin-bottom: 1rem; padding-bottom: 0.4rem;
+            border-bottom: 2px solid #003B6F; display: inline-block;
+        }
+
+        /* News */
+        .news-list { list-style: none; }
+        .news-list li { padding: 0.4rem 0; display: flex; gap: 0.75rem; font-size: 0.93rem; }
+        .news-list .date { color: #003B6F; font-weight: 600; flex-shrink: 0; min-width: 80px; }
+        .news-list .text { color: #444; }
+
+        /* Research */
+        .research-item { margin-bottom: 1rem; }
+        .research-item h3 { font-size: 1rem; font-weight: 600; color: #111; margin-bottom: 0.2rem; }
+        .research-item .advisor { font-size: 0.88rem; color: #003B6F; margin-bottom: 0.2rem; }
+        .research-item p { font-size: 0.93rem; color: #555; }
+
+        /* Publications */
+        .pub-list { list-style: none; counter-reset: pub; }
+        .pub-list li {
+            padding: 0.6rem 0; font-size: 0.93rem; color: #444;
+            display: flex; gap: 0.5rem;
+        }
+        .pub-list li::before {
+            counter-increment: pub;
+            content: "[" counter(pub) "]";
+            font-weight: 600; color: #003B6F; flex-shrink: 0;
+        }
+        .pub-list .title { font-weight: 600; color: #111; }
+        .pub-list .venue { font-style: italic; }
+        .pub-list .links-row { margin-top: 0.2rem; }
+        .pub-list .links-row a {
+            font-size: 0.82rem; background: #003B6F; color: #fff;
+            padding: 0.15rem 0.5rem; border-radius: 3px; margin-right: 0.3rem;
+            text-decoration: none; display: inline-block;
+        }
+        .pub-list .links-row a:hover { background: #00518a; }
+
+        /* Awards */
+        .award-list { list-style: none; }
+        .award-list li { padding: 0.35rem 0; font-size: 0.93rem; display: flex; gap: 0.75rem; }
+        .award-list .year { color: #003B6F; font-weight: 600; flex-shrink: 0; min-width: 45px; }
+
+        /* Education */
+        .edu-item { display: flex; gap: 1rem; padding: 0.5rem 0; }
+        .edu-item .period { color: #003B6F; font-weight: 600; font-size: 0.9rem; flex-shrink: 0; min-width: 110px; }
+        .edu-item .details h3 { font-size: 0.95rem; font-weight: 600; color: #111; }
+        .edu-item .details p { font-size: 0.9rem; color: #555; }
+
+        /* Footer */
+        footer {
+            text-align: center; padding: 1.5rem; color: #999;
+            font-size: 0.85rem; border-top: 1px solid #e5e7eb; margin-top: 1rem;
+        }
+
+        /* Mobile */
+        @media (max-width: 640px) {
+            .about { flex-direction: column; align-items: center; text-align: center; }
+            .about-photo img { width: 140px; height: 140px; }
+            .about-info .contact-row { justify-content: center; }
+            nav .links { display: none; }
+            nav .links.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: #fff; border-bottom: 1px solid #e5e7eb; padding: 0.75rem 1.5rem; gap: 0.75rem; }
+            .menu-btn { display: block; }
+            .news-list li { flex-direction: column; gap: 0.1rem; }
+            .edu-item { flex-direction: column; gap: 0.2rem; }
+            .award-list li { flex-direction: column; gap: 0.1rem; }
         }
     </style>
 </head>
-<body class="bg-gray-50 font-sans text-gray-800">
-    <!-- Navigation -->
-    <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-sm shadow-sm">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-primary flex items-center">
-                <i class="fa fa-user-circle mr-2"></i>
-                <span>Zhiming Chang</span>
-            </a>
-            
-            <!-- Desktop navigation -->
-            <nav class="hidden md:flex space-x-8">
-                <a href="#about" class="font-medium hover:text-primary transition-custom">About</a>
-                <a href="#updates" class="font-medium hover:text-primary transition-custom">Updates</a>
-                <a href="#experience" class="font-medium hover:text-primary transition-custom">Experience</a>
-                <a href="#skills" class="font-medium hover:text-primary transition-custom">Skills</a>
-                <a href="#contact" class="font-medium hover:text-primary transition-custom">Contact</a>
-            </nav>
-            
-            <!-- Mobile menu button -->
-            <button id="menuBtn" class="md:hidden text-gray-700 focus:outline-none">
-                <i class="fa fa-bars text-xl"></i>
-            </button>
+<body>
+
+<!-- Navigation -->
+<nav>
+    <div class="nav-inner">
+        <span class="name">Zhiming Chang</span>
+        <div class="links" id="navLinks">
+            <a href="#about">About</a>
+            <a href="#news">News</a>
+            <a href="#research">Research</a>
+            <a href="#publications">Publications</a>
+            <a href="#awards">Awards</a>
+            <a href="#education">Education</a>
         </div>
-        
-        <!-- Mobile navigation menu -->
-        <div id="mobileMenu" class="md:hidden hidden bg-white shadow-md absolute w-full">
-            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
-                <a href="#about" class="py-2 font-medium hover:text-primary transition-custom">About</a>
-                <a href="#updates" class="py-2 font-medium hover:text-primary transition-custom">Updates</a>
-                <a href="#experience" class="py-2 font-medium hover:text-primary transition-custom">Experience</a>
-                <a href="#skills" class="py-2 font-medium hover:text-primary transition-custom">Skills</a>
-                <a href="#contact" class="py-2 font-medium hover:text-primary transition-custom">Contact</a>
+        <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">
+            <i class="fa fa-bars"></i>
+        </button>
+    </div>
+</nav>
+
+<main class="container">
+
+    <!-- About -->
+    <div class="about" id="about">
+        <div class="about-photo">
+            <img src="avatar.png" alt="Zhiming Chang">
+        </div>
+        <div class="about-info">
+            <h1>Zhiming Chang</h1>
+            <div class="subtitle">M.S. Student in Applied Mathematics &amp; Statistics, Johns Hopkins University</div>
+            <p class="bio">
+                I am a graduate student at Johns Hopkins University. My research interests include LLM-based specification generation and multimodal agents for image processing. Previously, I obtained my B.S. from Shandong University (Data Science &amp; AI Honors Program).
+            </p>
+            <div class="contact-row">
+                <span><i class="fa fa-envelope"></i>zchang9@jh.edu</span>
+                <span><i class="fa fa-github"></i><a href="https://github.com/Le0Chang">Le0Chang</a></span>
+                <span><i class="fa fa-google"></i><a href="https://scholar.google.com/citations?user=EiGvdtoAAAAJ">Google Scholar</a></span>
+                <span><i class="fa fa-map-marker"></i>Baltimore, MD</span>
             </div>
         </div>
-    </header>
+    </div>
 
-    <!-- Hero Section -->
-    <section id="about" class="pt-28 pb-20 md:pt-36 md:pb-28 bg-gradient-to-br from-light to-blue-50">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0">
-                    <div class="relative">
-                        <div class="absolute -inset-4 bg-primary/10 rounded-full blur-xl"></div>
-                        <!-- Profile avatar -->
-                        <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/a3eb7c1e41214a79bea4b1a0a3f21f17~tplv-a9rns2rl98-image.image?rcl=20250828120934A70B1329F294722AFF42&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1756958975&amp;x-signature=VZqvd%2FLZ3QLgl9qxIYOIko3Gl8A%3D" alt="Zhiming Chang" class="relative w-64 h-64 md:w-80 md:h-80 object-cover rounded-full border-4 border-white shadow-lg mx-auto">
+    <!-- News -->
+    <section id="news">
+        <h2>News</h2>
+        <ul class="news-list">
+            <li>
+                <span class="date">2026.01</span>
+                <span class="text">Started Spring 2026 semester at JHU: Foundations of RL, Combinatorial Optimization, Monte Carlo Methods.</span>
+            </li>
+            <li>
+                <span class="date">2025.12</span>
+                <span class="text">Completed Fall 2025 courses: Machine Programming (A), Nonlinear Optimization I (B+), Introduction to Convexity (A).</span>
+            </li>
+            <li>
+                <span class="date">2025.09</span>
+                <span class="text">Joined Johns Hopkins University as a graduate student in Applied Mathematics &amp; Statistics.</span>
+            </li>
+            <li>
+                <span class="date">2024.06</span>
+                <span class="text">Graduated from Shandong University with B.S. in Statistics (Data Science &amp; AI Honors Program).</span>
+            </li>
+        </ul>
+    </section>
+
+    <!-- Research Interests -->
+    <section id="research">
+        <h2>Research</h2>
+        <div class="research-item">
+            <h3>LLM-based Specification Generation</h3>
+            <div class="advisor">Advisor: Prof. Ziyang Li, JHU Computer Science</div>
+            <p>Investigating the use of large language models for automated generation and transformation of formal specifications, bridging the gap between natural language requirements and verifiable code.</p>
+        </div>
+        <div class="research-item">
+            <h3>Multimodal Agent for Image Segmentation</h3>
+            <div class="advisor">Independent Research</div>
+            <p>Developing multimodal agents that integrate vision and language models for intelligent image segmentation and processing tasks.</p>
+        </div>
+    </section>
+
+    <!-- Publications -->
+    <section id="publications">
+        <h2>Publications</h2>
+        <ol class="pub-list">
+            <li>
+                <div>
+                    <span class="title">Improving Proximal Policy Optimization with Hellinger Divergence</span><br>
+                    J. Zhou, J. Feng, <strong>Z. Chang</strong><br>
+                    <span class="venue">2nd International Conference on Algorithm, Image Processing and Machine Vision (AIPMV)</span>, 2024<br>
+                    <div class="links-row">
+                        <a href="https://ieeexplore.ieee.org/abstract/document/10692111">IEEE</a>
                     </div>
                 </div>
-                <div class="md:w-1/2 md:pl-12">
-                    <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight text-gray-800 mb-4 text-shadow">
-                        Hello, I'm <span class="text-primary">Zhiming Chang</span>
-                    </h1>
-                    <h2 class="text-[clamp(1.2rem,3vw,1.8rem)] text-gray-600 mb-6">JHU AMS Graduate Student</h2>
-                    <p class="text-gray-700 text-lg mb-8 leading-relaxed">
-                        I'm currently pursuing graduate studies at Johns Hopkins University, focusing on optimization and machine learning courses. My research interest lies in machine learning model optimization.
-                    </p>
-                    <div class="flex flex-wrap gap-4">
-                        <a href="#contact" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-custom flex items-center">
-                            <i class="fa fa-envelope mr-2"></i> Contact Me
-                        </a>
-                        <a href="#skills" class="bg-white hover:bg-gray-100 text-primary border border-primary px-6 py-3 rounded-lg font-medium shadow hover:shadow-md transition-custom flex items-center">
-                            <i class="fa fa-code mr-2"></i> View Skills
-                        </a>
+            </li>
+            <li>
+                <div>
+                    <span class="title">An Improved Local Weighted Mean-based K-Nearest Neighbor Classifier</span><br>
+                    F. Liu, C. He, <strong>Z. Chang</strong><br>
+                    <span class="venue">IEEE 6th International Conference on Automation, Electronics and Electrical Engineering (AUTEEE)</span>, 2023<br>
+                    <div class="links-row">
+                        <a href="https://ieeexplore.ieee.org/abstract/document/10408698">IEEE</a>
                     </div>
                 </div>
+            </li>
+        </ol>
+    </section>
+
+    <!-- Awards -->
+    <section id="awards">
+        <h2>Awards &amp; Honors</h2>
+        <ul class="award-list">
+            <li>
+                <span class="year">2023</span>
+                <span>National First Prize, 16th National University Student Energy-Saving and Emission Reduction Social Practice and Technology Competition</span>
+            </li>
+        </ul>
+    </section>
+
+    <!-- Education -->
+    <section id="education">
+        <h2>Education</h2>
+        <div class="edu-item">
+            <span class="period">2025 &ndash; Present</span>
+            <div class="details">
+                <h3>Johns Hopkins University</h3>
+                <p>M.S. in Applied Mathematics &amp; Statistics</p>
+            </div>
+        </div>
+        <div class="edu-item">
+            <span class="period">2021 &ndash; 2024</span>
+            <div class="details">
+                <h3>Shandong University</h3>
+                <p>B.S. in Statistics (Data Science &amp; Artificial Intelligence Honors Program)</p>
             </div>
         </div>
     </section>
 
-    <!-- Updates Section -->
-    <section id="updates" class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-gray-800 mb-4">Latest Updates</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">
-                    Real-time updates on my academic journey and activities
-                </p>
-            </div>
-            
-            <div class="max-w-4xl mx-auto bg-light rounded-2xl shadow-md overflow-hidden border border-blue-100">
-                <div class="p-6 md:p-8">
-                    <div class="flex items-start space-x-4">
-                        <div class="flex-shrink-0 mt-1">
-                            <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center pulse-animation">
-                                <i class="fa fa-graduation-cap"></i>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex items-center mb-2">
-                                <h3 class="font-bold text-lg text-gray-800">Joined Johns Hopkins University</h3>
-                                <span class="ml-3 bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Recent</span>
-                            </div>
-                            <p class="text-gray-600 mb-3">
-                                Started my graduate studies in the Applied Mathematics &amp; Statistics program at JHU. Excited to explore advanced topics in data science and statistical modeling.
-                            </p>
-                            <div class="flex items-center text-sm text-gray-500">
-                                <i class="fa fa-calendar-o mr-2"></i>
-                                <span>Fall 2025</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <hr class="my-6 border-blue-100">
-                    
-                    <div class="flex items-start space-x-4">
-                        <div class="flex-shrink-0 mt-1">
-                            <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">
-                                <i class="fa fa-graduation-cap"></i>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex items-center mb-2">
-                                <h3 class="font-bold text-lg text-gray-800">Graduated from Shandong University</h3>
-                            </div>
-                            <p class="text-gray-600 mb-3">
-                                Successfully completed undergraduate studies and obtained a Bachelor of Science degree in the Data Science and Artificial Intelligence Honors Program.
-                            </p>
-                            <div class="flex items-center text-sm text-gray-500">
-                                <i class="fa fa-calendar-o mr-2"></i>
-                                <span>Summer 2024</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <hr class="my-6 border-blue-100">
-                    
-                    <div class="flex items-start space-x-4">
-                        <div class="flex-shrink-0 mt-1">
-                            <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">
-                                <i class="fa fa-trophy"></i>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex items-center mb-2">
-                                <h3 class="font-bold text-lg text-gray-800">Won National First Prize</h3>
-                            </div>
-                            <p class="text-gray-600 mb-3">
-                                Awarded First Prize in the 16th National University Student Energy-Saving and Emission Reduction Social Practice and Technology Competition.
-                            </p>
-                            <div class="flex items-center text-sm text-gray-500">
-                                <i class="fa fa-calendar-o mr-2"></i>
-                                <span>2023</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <hr class="my-6 border-blue-100">
-                    
-                    <div class="flex items-start space-x-4">
-                        <div class="flex-shrink-0 mt-1">
-                            <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">
-                                <i class="fa fa-graduation-cap"></i>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex items-center mb-2">
-                                <h3 class="font-bold text-lg text-gray-800">Joined Shandong University</h3>
-                            </div>
-                            <p class="text-gray-600 mb-3">
-                                Began undergraduate studies in the Data Science and Artificial Intelligence Honors Program at Shandong University.
-                            </p>
-                            <div class="flex items-center text-sm text-gray-500">
-                                <i class="fa fa-calendar-o mr-2"></i>
-                                <span>Fall 2021</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+</main>
 
-    <!-- Experience Section -->
-    <section id="experience" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-gray-800 mb-4">My Experience</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto text-lg">
-                    My educational background has shaped my professional knowledge and academic abilities
-                </p>
-            </div>
-            
-            <div class="relative max-w-4xl mx-auto">
-                <!-- Timeline axis - 美化的时间线，穿过圆形中心 -->
-                <div class="absolute left-0 md:left-1/2 h-full w-1 bg-gradient-to-b from-primary via-primary/70 to-primary/40 transform md:translate-x-[-0.5rem]"></div>
-                
-                <!-- Experience item 1: MS Degree -->
-                <div class="relative mb-16 timeline-item" data-delay="0">
-                    <div class="flex flex-col md:flex-row items-center">
-                        <div class="md:w-1/2 md:pr-12 md:text-right mb-8 md:mb-0 md:order-1 order-2">
-                            <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-primary hover:shadow-xl transition-custom">
-                                <h3 class="text-xl font-bold mb-1">M.S. in Applied Mathematics &amp; Statistics</h3>
-                                <p class="text-primary font-medium mb-2">Johns Hopkins University | 2025 - Present</p>
-                                <p class="text-gray-600">Pursuing graduate studies in AMS with focus on optimization and machine learning.</p>
-                            </div>
-                        </div>
-                        <!-- 美化的圆形标记 -->
-                        <div class="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-primary border-4 border-white shadow-lg transform -translate-x-1/2 md:translate-x-[-0.5rem] z-10 hover:scale-110 transition-custom flex items-center justify-center">
-                            <div class="w-3 h-3 rounded-full bg-white"></div>
-                        </div>
-                        <div class="md:w-1/2 md:pl-12 md:order-2 order-1"></div>
-                    </div>
-                </div>
-                
-                <!-- Experience item 2: BS Degree -->
-                <div class="relative timeline-item" data-delay="200">
-                    <div class="flex flex-col md:flex-row items-center">
-                        <div class="md:w-1/2 md:pr-12 md:order-1 order-1"></div>
-                        <!-- 美化的圆形标记 -->
-                        <div class="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-primary border-4 border-white shadow-lg transform -translate-x-1/2 md:translate-x-[-0.5rem] z-10 hover:scale-110 transition-custom flex items-center justify-center">
-                            <div class="w-3 h-3 rounded-full bg-white"></div>
-                        </div>
-                        <div class="md:w-1/2 md:pl-12 mb-8 md:mb-0 md:order-2 order-2">
-                            <div class="bg-white p-6 rounded-xl shadow-lg border-r-4 border-primary hover:shadow-xl transition-custom">
-                                <h3 class="text-xl font-bold mb-1">B.S. in Statistics</h3>
-                                <p class="text-primary font-medium mb-2">Shandong University | 2021 - 2024</p>
-                                <p class="text-gray-600">Studied in the Statistics (Data Science and Artificial Intelligence Honors Program).</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<footer>
+    &copy; 2026 Zhiming Chang
+</footer>
 
-    <!-- Skills Section -->
-    <section id="skills" class="py-20 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-gray-800 mb-4">My Skills</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto text-lg">
-                    Professional skills developed through academic and practical experience
-                </p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Skill Card 1: Programming Languages -->
-                <div class="bg-gray-50 rounded-xl p-6 shadow-md hover:shadow-xl transition-custom border border-gray-100">
-                    <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-5">
-                        <i class="fa fa-code text-2xl text-primary"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Programming Languages</h3>
-                    <p class="text-gray-600 mb-4">Proficient in Python and R language, capable of efficient data processing and analysis.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-blue-100 text-primary text-xs px-3 py-1 rounded-full">Python</span>
-                        <span class="bg-blue-100 text-primary text-xs px-3 py-1 rounded-full">R</span>
-                        <span class="bg-blue-100 text-primary text-xs px-3 py-1 rounded-full">Data Processing</span>
-                        <span class="bg-blue-100 text-primary text-xs px-3 py-1 rounded-full">Data Analysis</span>
-                    </div>
-                </div>
-                
-                <!-- Skill Card 2: Operating Systems -->
-                <div class="bg-gray-50 rounded-xl p-6 shadow-md hover:shadow-xl transition-custom border border-gray-100">
-                    <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-5">
-                        <i class="fa fa-server text-2xl text-primary"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Operating Systems</h3>
-                    <p class="text-gray-600 mb-4">Familiar with Linux system operation, able to use Linux system for server construction, operation and maintenance.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-blue-100 text-primary text-xs px-3 py-1 rounded-full">Linux</span>
-                        <span class="bg-blue-100 text-primary text-xs px-3 py-1 rounded-full">Server Setup</span>
-                        <span class="bg-blue-100 text-primary text-xs px-3 py-1 rounded-full">System Administration</span>
-                        <span class="bg-blue-100 text-primary text-xs px-3 py-1 rounded-full">Maintenance</span>
-                    </div>
-                </div>
-                
-                <!-- Skill Card 3: Machine Learning & Deep Learning -->
-                <div class="bg-gray-50 rounded-xl p-6 shadow-md hover:shadow-xl transition-custom border border-gray-100">
-                    <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-5">
-                        <i class="fa fa-cogs text-2xl text-primary"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Machine Learning &amp; Deep Learning</h3>
-                    <p class="text-gray-600 mb-4">Have a solid theoretical foundation for machine learning and deep learning, and be able to apply relevant algorithms to solve practical problems.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-blue-100 text-primary text-xs px-3 py-1 rounded-full">ML Algorithms</span>
-                        <span class="bg-blue-100 text-primary text-xs px-3 py-1 rounded-full">Deep Learning</span>
-                        <span class="bg-blue-100 text-primary text-xs px-3 py-1 rounded-full">Theoretical Foundation</span>
-                        <span class="bg-blue-100 text-primary text-xs px-3 py-1 rounded-full">Practical Application</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-gray-800 mb-4">Contact Me</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto text-lg">
-                    Have questions or collaboration ideas? Feel free to get in touch
-                </p>
-            </div>
-            
-            <div class="max-w-4xl mx-auto">
-                <div class="grid grid-cols-1 md:grid-cols-1 gap-8 mb-12">
-                    <!-- Contact Information -->
-                    <div class="bg-gray-50 rounded-xl p-8 shadow-md">
-                        <h3 class="text-xl font-bold mb-6">Contact Information</h3>
-                        
-                        <div class="space-y-4">
-                            <div class="flex items-start">
-                                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
-                                    <i class="fa fa-envelope text-primary"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium mb-1">Email</h4>
-                                    <p class="text-gray-600">zchang9@jh.edu</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
-                                    <i class="fa fa-github text-primary"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium mb-1">GitHub</h4>
-                                    <p class="text-gray-600">github.com/Le0Chang</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
-                                    <i class="fa fa-university text-primary"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium mb-1">University</h4>
-                                    <p class="text-gray-600">Johns Hopkins University</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
-                                    <i class="fa fa-map-marker text-primary"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium mb-1">Location</h4>
-                                    <p class="text-gray-600">Baltimore, Maryland</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-primary text-white py-10">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0">
-                    <a href="#" class="text-2xl font-bold flex items-center">
-                        <i class="fa fa-user-circle mr-2"></i>
-                        <span>Zhiming Chang</span>
-                    </a>
-                    <p class="text-blue-100 mt-2">JHU AMS Graduate Student | Machine Learning Researcher</p>
-                </div>
-                
-                <div class="flex space-x-6">
-                    <a href="#about" class="text-blue-100 hover:text-white transition-custom">About</a>
-                    <a href="#updates" class="text-blue-100 hover:text-white transition-custom">Updates</a>
-                    <a href="#experience" class="text-blue-100 hover:text-white transition-custom">Experience</a>
-                    <a href="#skills" class="text-blue-100 hover:text-white transition-custom">Skills</a>
-                    <a href="#contact" class="text-blue-100 hover:text-white transition-custom">Contact</a>
-                </div>
-            </div>
-            
-            <div class="border-t border-blue-700 mt-8 pt-8 text-center text-blue-100">
-                <p>© 2025 Zhiming Chang. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- JavaScript -->
-    <script>
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('py-2', 'shadow');
-                navbar.classList.remove('py-4');
-            } else {
-                navbar.classList.add('py-4');
-                navbar.classList.remove('py-2', 'shadow');
-            }
+<script>
+    document.getElementById('menuBtn').addEventListener('click', function() {
+        document.getElementById('navLinks').classList.toggle('open');
+    });
+    document.querySelectorAll('#navLinks a').forEach(function(a) {
+        a.addEventListener('click', function() {
+            document.getElementById('navLinks').classList.remove('open');
         });
-        
-        // Mobile menu toggle
-        const menuBtn = document.getElementById('menuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        
-        menuBtn.addEventListener('click', function() {
-            mobileMenu.classList.toggle('hidden');
-            // Toggle icon
-            const icon = menuBtn.querySelector('i');
-            if (mobileMenu.classList.contains('hidden')) {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            } else {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            }
-        });
-        
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                // Close mobile menu if open
-                if (!mobileMenu.classList.contains('hidden')) {
-                    mobileMenu.classList.add('hidden');
-                    const icon = menuBtn.querySelector('i');
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                }
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-        
-        // Timeline animation on scroll
-        function checkTimelineVisibility() {
-            const timelineItems = document.querySelectorAll('.timeline-item');
-            
-            timelineItems.forEach((item, index) => {
-                const itemTop = item.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                
-                if (itemTop < windowHeight * 0.85) {
-                    // Add delay for sequential animation
-                    setTimeout(() => {
-                        item.classList.add('visible');
-                    }, parseInt(item.dataset.delay) || 0);
-                }
-            });
-        }
-        
-        // Initial check and add scroll event listener
-        window.addEventListener('load', checkTimelineVisibility);
-        window.addEventListener('scroll', checkTimelineVisibility);
-    </script>
+    });
+</script>
 
-
-    </body></html>
+</body>
+</html>
