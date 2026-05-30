@@ -55,7 +55,12 @@
         }
 
         /* News */
-        .news-list { list-style: none; }
+        .news-list {
+            list-style: none;
+            max-height: 9.5rem;   /* ~3 items visible */
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
         .news-list li { padding: 0.4rem 0; display: flex; gap: 0.75rem; font-size: 0.93rem; }
         .news-list .date { color: #003B6F; font-weight: 600; flex-shrink: 0; min-width: 80px; }
         .news-list .text { color: #444; }
@@ -165,8 +170,12 @@
         <h2>News</h2>
         <ul class="news-list">
             <li>
-                <span class="date">2026.01</span>
-                <span class="text">Started Spring 2026 semester at JHU: Foundations of RL, Combinatorial Optimization, Monte Carlo Methods.</span>
+                <span class="date">2026.05</span>
+                <span class="text">Paper <strong>BODHI: Precise OS Kernel Specification Inference</strong> released on arXiv — our work on LLM-based specification generation.</span>
+            </li>
+            <li>
+                <span class="date">2026.05</span>
+                <span class="text">Completed Spring 2026 semester at JHU: Foundations of RL (A), Combinatorial Optimization (A), Monte Carlo Methods (A).</span>
             </li>
             <li>
                 <span class="date">2025.12</span>
@@ -202,6 +211,16 @@
     <section id="publications">
         <h2>Publications</h2>
         <ol class="pub-list">
+            <li>
+                <div>
+                    <span class="title">BODHI: Precise OS Kernel Specification Inference</span><br>
+                    <strong>Z. Chang</strong>, Z. Li<br>
+                    <span class="venue">arXiv</span>, 2026<br>
+                    <div class="links-row">
+                        <a href="https://arxiv.org/abs/2605.23931">arXiv</a>
+                    </div>
+                </div>
+            </li>
             <li>
                 <div>
                     <span class="title">Improving Proximal Policy Optimization with Hellinger Divergence</span><br>
