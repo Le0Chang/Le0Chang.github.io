@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-padding-top: 6rem; scroll-behavior: smooth; }
         body { font-family: 'Inter', system-ui, sans-serif; color: #333; line-height: 1.6; background: #fff; }
         a { color: #003B6F; text-decoration: none; }
         a:hover { text-decoration: underline; }
@@ -30,7 +31,7 @@
 
         /* Main layout */
         .container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
-        main { padding-top: 4rem; }
+        main { padding-top: 6rem; }
 
         /* About section - sidebar layout */
         .about { display: flex; gap: 2.5rem; padding: 2.5rem 0 2rem; border-bottom: 1px solid #e5e7eb; }
@@ -57,7 +58,7 @@
         /* News */
         .news-list {
             list-style: none;
-            max-height: 9.5rem;   /* ~3 items visible */
+            max-height: 14rem;     /* ~4-5 items visible */
             overflow-y: auto;
             scroll-behavior: smooth;
         }
